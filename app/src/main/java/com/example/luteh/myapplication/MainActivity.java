@@ -53,12 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-// instantiate it within the onCreate method
-        mProgressDialog = new ProgressDialog(MainActivity.this);
-        mProgressDialog.setMessage("A message");
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        mProgressDialog.setCancelable(true);
+
 
 
 
@@ -82,6 +77,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                item.setImage(pathDir);
 //                Log.d(TAG, "onClick: " + item.getImage().toString());
                 // execute this when the downloader must be fired
+                // instantiate it within the onCreate method
+                mProgressDialog = new ProgressDialog(MainActivity.this);
+                mProgressDialog.setMessage("A message");
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(true);
                 final DownloadTask downloadTask = new DownloadTask(MainActivity.this);
                 downloadTask.execute(URL);
 
