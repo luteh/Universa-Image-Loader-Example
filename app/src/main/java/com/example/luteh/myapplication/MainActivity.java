@@ -20,16 +20,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnLoad, btnShow;
     private ImageView imageView;
 
-    private String FEED_URL = "http://api.themoviedb.org/3/movie/157336/images?api_key=8496be0b2149805afa458ab8ec27560c";
-    ImageLoader imageLoader;
-    UniversalImageItem item;
-    DisplayImageOptions defaultOptions;
+    private ImageLoader imageLoader;
+    private UniversalImageItem item;
+    private DisplayImageOptions defaultOptions;
     private static final String TAG = "MyActivity";
-    ImageLoaderConfiguration config;
+    private ImageLoaderConfiguration config;
 
-    String fileName = "tes.jpg";
-    String baseDir = "file://"+Environment.getExternalStorageDirectory().getAbsolutePath();
-    String pathDir = baseDir + "/DCIM/Camera/" + fileName;
+    private final String fileName = "tes.jpg";
+    private final String baseDir = "file://" + Environment.getExternalStorageDirectory().getAbsolutePath();
+    private final String pathDir = baseDir + "/DCIM/Camera/" + fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +37,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         item = new UniversalImageItem();
 
+        btnLoad = (Button) findViewById(R.id.btnLoad);
+        btnShow = (Button) findViewById(R.id.btnShow);
+
+        imageView = (ImageView) findViewById(R.id.imageView);
+
+        btnLoad.setOnClickListener(this);
+        btnShow.setOnClickListener(this);
+
+        UILConfiguration();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnLoad:
+                item.setImage(pathDir);
+                Log.d(TAG, "onClick: " + item.getImage().toString());
+                break;
+            case R.id.btnShow:
+                imageLoader = imageLoader.getInstance();
+                imageLoader.displayImage(item.getImage(), imageView, defaultOptions);
+                break;
+        }
+    }
+
+    public void UILConfiguration() {
         defaultOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -51,29 +76,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         ImageLoader.getInstance().init(config);
-
-        btnLoad = (Button) findViewById(R.id.btnLoad);
-        btnShow = (Button) findViewById(R.id.btnShow);
-
-        imageView = (ImageView) findViewById(R.id.imageView);
-
-        btnLoad.setOnClickListener(this);
-        btnShow.setOnClickListener(this);
-
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnLoad:
-                item.setImage(pathDir);
-                Log.d(TAG, "onClick: "+item.getImage().toString());
-                break;
-            case R.id.btnShow:
-                imageLoader = imageLoader.getInstance();
-                imageLoader.displayImage(item.getImage(), imageView, defaultOptions);
-                break;
-        }
     }
 }
