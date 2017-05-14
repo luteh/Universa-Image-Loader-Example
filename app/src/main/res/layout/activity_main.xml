@@ -18,6 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show Image"/>
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Cache"/>
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"

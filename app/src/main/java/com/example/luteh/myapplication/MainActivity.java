@@ -36,7 +36,7 @@ import java.net.URL;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button btnLoad, btnShow;
+    private Button btnLoad, btnShow, btnDelete;
     private ImageView imageView;
 
     private ImageLoader imageLoader;
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String URL = "http://image.tmdb.org/t/p/w500/gq4Z1pfOWHn3FKFNutlDCySps9C.jpg";
 
-    private final String uilfileName = "tes.jpg";
-    private final String uilbaseDir = "file://" + Environment.getExternalStorageDirectory().getAbsolutePath();
-    private final String uilpathDir = uilbaseDir + "/DCIM/Camera/" + uilfileName;
+//    private final String uilfileName = "tes.jpg";
+//    private final String uilbaseDir = "file://" + Environment.getExternalStorageDirectory().getAbsolutePath();
+//    private final String uilpathDir = uilbaseDir + "/DCIM/Camera/" + uilfileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +62,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnLoad = (Button) findViewById(R.id.btnLoad);
         btnShow = (Button) findViewById(R.id.btnShow);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
         btnLoad.setOnClickListener(this);
         btnShow.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
 
 //        UILConfiguration();
     }
@@ -99,7 +101,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                imageLoader.displayImage(uilpathDir, imageView, defaultOptions);
                 loadImageFromStorage();
                 break;
+            case R.id.btnDelete:
+                deleteCache();
+                break;
         }
+    }
+
+    private void deleteCache() {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        File dir = cw.getDir("imageDir", MODE_PRIVATE);
+        File mypath = new File(dir, "profile.jpg");
+
+        if (mypath.delete()) {
+            Log.d(TAG, "File removed! ");
+        } else
+            Log.d(TAG, "File didn't remove!");
     }
 
     private void loadImageFromStorage() {
@@ -140,9 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private Context context;
         private PowerManager.WakeLock mWakeLock;
 
-        private final String fileName = "tes.jpg";
-        private final String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        private final String pathDir = baseDir + "/DCIM/Camera/" + fileName;
+//        private final String fileName = "tes.jpg";
+//        private final String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        private final String pathDir = baseDir + "/DCIM/Camera/" + fileName;
 
         public DownloadTask(Context context) {
             this.context = context;
